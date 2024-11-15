@@ -4,7 +4,7 @@ const errName = (name: string) => {
 }
 
 export const local = {
-    get: (key: string) => {
+    get: (key: string): any[] | { [key: string]: any } | null => {
         try {
             const data = localStorage.getItem(key);
             return data ? JSON.parse(data) : null
@@ -14,7 +14,7 @@ export const local = {
             return null
         }
     },
-    set: (key: string, value: any) => {
+    set: (key: string, value: any): boolean | null => {
         try {
             localStorage.setItem(key, JSON.stringify(value));
             return true
@@ -23,7 +23,7 @@ export const local = {
             return null
         }
     },
-    delete: (key: string) => {
+    delete: (key: string): boolean | null => {
         try {
             localStorage.removeItem(key);
             return true

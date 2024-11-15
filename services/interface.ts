@@ -1,4 +1,11 @@
-
+interface IEnv {
+    appName: string
+    port: number
+    backend: string
+    accessTokenName: string
+    refreshTokenName: string
+    serviceType: "api" | "local"
+}
 
 interface IResponse {
     statusCode: number,
@@ -7,7 +14,6 @@ interface IResponse {
     data?: any
 }
 
-
 interface ITask {
     id: number
     name: string
@@ -15,3 +21,4 @@ interface ITask {
     createdAt: Date
     isActive: boolean
 }
+
