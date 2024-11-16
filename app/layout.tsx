@@ -1,9 +1,12 @@
+"use client"
 import React from 'react'
 
-import type { Metadata } from "next";
+// import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/layout/navbar";
+import { Provider } from 'react-redux';
+import store from '@/store/store';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -16,10 +19,10 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export const metadata: Metadata = {
-  title: "Todo app",
-  description: "NextJS TODO APP .",
-};
+// export const metadata: Metadata = {
+//   title: "Todo app",
+//   description: "NextJS TODO APP .",
+// };
 
 export default function RootLayout({
   children,
@@ -35,16 +38,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased  bg-indigo-950`}
       >
-        <Navbar />
-        <div className="flex w-screen h-screen">
-          <div className='h-screen fixed pb-5 pt-16 w-full px-5 '>
-            <div className='h-full flex flex-col overflow-y-auto pt-5'>
-              {children}
+        <Provider store={store}>
+          <Navbar />
+          <div className="flex w-screen h-screen">
+            <div className='h-screen fixed pb-5 pt-16 w-full px-5 '>
+              <div className='h-full flex flex-col overflow-y-auto pt-5'>
+                {children}
+              </div>
             </div>
           </div>
-        </div>
-
-
+        </Provider>
       </body>
     </html >
   );
