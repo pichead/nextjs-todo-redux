@@ -7,6 +7,12 @@ interface IEnv {
     serviceType: "api" | "local"
 }
 
+interface IServiceResponse {
+    status: string,
+    message: string,
+    data?: any
+}
+
 interface IResponse {
     statusCode: number,
     messageEn: string,

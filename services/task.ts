@@ -9,6 +9,52 @@ const errorName = (name?: string) => {
 
 const serviceType = ENV.serviceType
 
+const initialTask: ITask[] = [
+    {
+        id: 1,
+        name: "ตื่นนอน",
+        isActive: true,
+        status: "SUCCESS",
+        createdAt: new Date("16/11/2024")
+    },
+    {
+        id: 2,
+        name: "ล้างหน้า",
+        isActive: true,
+        status: "PENDING",
+        createdAt: new Date("16/11/2024")
+    },
+    {
+        id: 3,
+        name: "อาบน้ำ",
+        isActive: true,
+        status: "PENDING",
+        createdAt: new Date("16/11/2024")
+    }
+    ,
+    {
+        id: 4,
+        name: "ทำอาหาร",
+        isActive: true,
+        status: "PENDING",
+        createdAt: new Date("16/11/2024")
+    },
+    {
+        id: 5,
+        name: "ล้างจาน",
+        isActive: true,
+        status: "PENDING",
+        createdAt: new Date("16/11/2024")
+    },
+    {
+        id: 6,
+        name: "นอนกลางวัน",
+        isActive: true,
+        status: "PENDING",
+        createdAt: new Date("16/11/2024")
+    }
+]
+
 const create = async (name: string) => {
 
     const createData: ITask = {
