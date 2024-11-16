@@ -9,8 +9,6 @@ import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
-import AccountCircle from '@mui/icons-material/AccountCircle';
-
 import MoreIcon from '@mui/icons-material/MoreVert';
 
 import Link from 'next/link'
@@ -25,7 +23,7 @@ function Navbar() {
     const menu = [
         {
             name: "Task",
-            route: "/task"
+            route: "/manage"
         },
         {
             name: "Dashboard",
@@ -40,9 +38,6 @@ function Navbar() {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-    const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
 
     const handleMobileMenuClose = () => {
         setMobileMoreAnchorEl(null);
@@ -94,15 +89,13 @@ function Navbar() {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <React.Fragment>
-                {menu.map((m, i: number) => (
-                    <MenuItem key={"menu_m_" + i}>
-                        <Link href={m.route} className='self-center mx-3 hover:cursor-pointer' >
-                            {m.name}
-                        </Link>
-                    </MenuItem>
-                ))}
-            </React.Fragment>
+            {menu.map((m, i: number) => (
+                <MenuItem key={"menu_m_" + i}>
+                    <Link href={m.route} className='self-center mx-3 hover:cursor-pointer' >
+                        {m.name}
+                    </Link>
+                </MenuItem>
+            ))}
         </Menu>
     );
 
@@ -121,17 +114,13 @@ function Navbar() {
                         </Typography>
 
                         <Box sx={{ display: { xs: 'none', md: "flex" } }}>
-                            <React.Fragment>
-                                {menu.map((m, i: number) => (
-                                    <React.Fragment key={"menu_" + i}>
-                                        <Link href={m.route} className='self-center mx-3 hover:cursor-pointer' >
-                                            {m.name}
-                                        </Link>
-                                    </React.Fragment>
-                                ))}
-                            </React.Fragment>
+                            {menu.map((m, i: number) => (
+                                <Link key={"menu_" + i} href={m.route} className='self-center mx-3 hover:cursor-pointer' >
+                                    {m.name}
+                                </Link>
+                            ))}
 
-                            <IconButton
+                            {/* <IconButton
                                 size="large"
                                 edge="end"
                                 aria-label="account of current user"
@@ -141,7 +130,7 @@ function Navbar() {
                                 color="inherit"
                             >
                                 <AccountCircle />
-                            </IconButton>
+                            </IconButton> */}
                         </Box>
                         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                             <IconButton

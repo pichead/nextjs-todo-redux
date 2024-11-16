@@ -1,5 +1,5 @@
 
-const ok = <T>(message: string, data: T) => {
+const ok = <T>(message: string, data: T): IServiceResponse => {
     return {
         status: "ok",
         message: message,
@@ -8,7 +8,7 @@ const ok = <T>(message: string, data: T) => {
 }
 
 
-const any = <T>(message: string, data?: T) => {
+const any = <T>(message: string, data?: T): IServiceResponse => {
     return {
         status: "any",
         message: message,
@@ -16,7 +16,7 @@ const any = <T>(message: string, data?: T) => {
     }
 }
 
-const error = <T>(message: string) => {
+const error = <T>(message: string): IServiceResponse => {
     return {
         status: "error",
         message: message
