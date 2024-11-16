@@ -10,15 +10,13 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
 import MoreIcon from '@mui/icons-material/MoreVert';
-
-import Link from 'next/link'
 import { ENV } from '@/utils/constants';
-
-
-
-
+import { useRouter } from 'next/navigation';
 
 function Navbar() {
+
+    const router = useRouter()
+
     const AppName = ENV.appName
     const menu = [
         {
@@ -91,13 +89,17 @@ function Navbar() {
         >
             {menu.map((m, i: number) => (
                 <MenuItem key={"menu_m_" + i}>
-                    <Link href={m.route} className='self-center mx-3 hover:cursor-pointer' >
+                    <div onClick={() => routing(m.route)} className='self-center mx-3 hover:cursor-pointer' >
                         {m.name}
-                    </Link>
+                    </div>
                 </MenuItem>
             ))}
         </Menu>
     );
+
+    const routing = (path: string) => {
+        router.push(path)
+    }
 
 
     return (
@@ -115,9 +117,9 @@ function Navbar() {
 
                         <Box sx={{ display: { xs: 'none', md: "flex" } }}>
                             {menu.map((m, i: number) => (
-                                <Link key={"menu_" + i} href={m.route} className='self-center mx-3 hover:cursor-pointer' >
+                                <div key={"menu_" + i} className='self-center mx-3 hover:cursor-pointer' onClick={() => routing(m.route)}>
                                     {m.name}
-                                </Link>
+                                </div>
                             ))}
 
                             {/* <IconButton

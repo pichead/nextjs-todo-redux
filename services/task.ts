@@ -9,58 +9,75 @@ const errorName = (name?: string) => {
 
 const serviceType = ENV.serviceType
 
-const initialTask: ITask[] = [
+const initialData: ITask[] = [
     {
         id: 1,
-        name: "ตื่นนอน",
+        name: "task1",
         isActive: true,
         status: "SUCCESS",
-        createdAt: new Date("16/11/2024")
+        createdAt: new Date().toISOString()
     },
     {
         id: 2,
-        name: "ล้างหน้า",
+        name: "task2",
         isActive: true,
         status: "PENDING",
-        createdAt: new Date("16/11/2024")
+        createdAt: new Date().toISOString()
     },
     {
         id: 3,
-        name: "อาบน้ำ",
+        name: "task3",
         isActive: true,
         status: "PENDING",
-        createdAt: new Date("16/11/2024")
+        createdAt: new Date().toISOString()
     }
     ,
     {
         id: 4,
-        name: "ทำอาหาร",
+        name: "task4",
         isActive: true,
         status: "PENDING",
-        createdAt: new Date("16/11/2024")
+        createdAt: new Date().toISOString()
     },
     {
         id: 5,
-        name: "ล้างจาน",
+        name: "task5",
         isActive: true,
         status: "PENDING",
-        createdAt: new Date("16/11/2024")
+        createdAt: new Date().toISOString()
     },
     {
         id: 6,
-        name: "นอนกลางวัน",
+        name: "task6",
         isActive: true,
         status: "PENDING",
-        createdAt: new Date("16/11/2024")
+        createdAt: new Date().toISOString()
     }
 ]
+
+const initial = async () => {
+    try {
+        console.log("init task")
+        if (serviceType === "api") {
+
+        }
+        else {
+            local.set("task", initialData)
+            return res.ok("ค้นหา task สำเร็จ", sortData(initialData, "createdAt", "asc"))
+        }
+
+    } catch (error) {
+        console.error(errorName(), error)
+        return null
+    }
+}
 
 const create = async (name: string) => {
 
     const createData: ITask = {
         id: Math.floor(Date.now() / 1000),
         name: name,
-        createdAt: new Date(),
+        createdAt: new Date().toISOString(),
         status: "PENDING",
         isActive: true
     }
@@ -77,7 +94,7 @@ const create = async (name: string) => {
             const save = local.set("task", newArr)
 
             if (save) {
-                return res.ok("สร้าง task ใหม่สำเร็จ", createData)
+                return res.ok("สร้าง task ใหม่สำเร็จ", sortData(newArr, "id", "asc"))
             }
             else {
                 return res.error("สร้าง task ไม่สำเร็จ")
@@ -163,7 +180,7 @@ const complete = async (id: number) => {
             const save = local.set("task", allTask)
 
             if (save) {
-                return res.ok("ปิด task สำเร็จ", allTask[existTaskIndex])
+                return res.ok("ปิด task สำเร็จ", sortData(allTask, "id", "asc"))
             }
             else {
                 return res.error("ปิด task ไม่สำเร็จ")
@@ -185,8 +202,10 @@ const pending = async (id: number) => {
         else {
             const taskData = local.get("task");
             const allTask: ITask[] = Array.isArray(taskData) ? taskData : [];
+            console.log("allTask : ", allTask)
             const existTaskIndex = allTask.findIndex((f) => f.id === id)
-
+            console.log("existTaskIndex : ", existTaskIndex)
+            console.log("allTask[existTaskIndex] : ", allTask[existTaskIndex])
             if (existTaskIndex < 0) {
                 return res.error("ไม่พบ Task")
             }
@@ -199,7 +218,7 @@ const pending = async (id: number) => {
             const save = local.set("task", allTask)
 
             if (save) {
-                return res.ok("เปลี่ยนสถานะ task สำเร็จ", allTask[existTaskIndex])
+                return res.ok("เปลี่ยนสถานะ task สำเร็จ", sortData(allTask, "id", "asc"))
             }
             else {
                 return res.error("เปลี่ยนสถานะ task ไม่สำเร็จ")
@@ -231,7 +250,7 @@ const removeComplete = async () => {
             const save = local.set("task", removeCompleteTask)
 
             if (save) {
-                return res.ok("ลบ task สำเร็จ", save)
+                return res.ok("ลบ task สำเร็จ", sortData(removeCompleteTask, "id", "asc"))
             }
             else {
                 return res.error("ลบ task ไม่สำเร็จ")
@@ -259,7 +278,7 @@ const removeAll = async () => {
             const save = local.set("task", removeAllTask)
 
             if (save) {
-                return res.ok("ลบ task ทั้งหมดสำเร็จ", save)
+                return res.ok("ลบ task ทั้งหมดสำเร็จ", sortData(removeAllTask, "id", "asc"))
             }
             else {
                 return res.error("ลบ task ทั้งหมดไม่สำเร็จ")
@@ -296,7 +315,7 @@ const remove = async (id: number) => {
             const save = local.set("task", allTask)
 
             if (save) {
-                return res.ok("เปลี่ยนสถานะ task สำเร็จ", allTask[existTaskIndex])
+                return res.ok("เปลี่ยนสถานะ task สำเร็จ", sortData(allTask, "id", "asc"))
             }
             else {
                 return res.error("เปลี่ยนสถานะ task ไม่สำเร็จ")
@@ -317,6 +336,6 @@ export const task = {
     pending,
     removeComplete,
     removeAll,
-    remove
-
+    remove,
+    initial
 }

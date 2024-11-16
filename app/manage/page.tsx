@@ -3,52 +3,62 @@ import BtnDanger from '@/components/button/btn-danger'
 import BtnWarning from '@/components/button/btn-warning'
 import CreateTask from '@/components/task/createTask'
 import Task from '@/components/task/task'
-import { task } from '@/services/task'
 import React, { useEffect, useState } from 'react'
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import ClearIcon from '@mui/icons-material/Clear';
 import { alert } from '@/utils/alert'
 
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/store/store';
+import * as taskAction from '@/store/slices/taskSlice';
+
+
 
 const PageManage = () => {
+    const dispatch = useDispatch<AppDispatch>();
+    const { tasks, isInit } = useSelector((state: RootState) => state.task);
 
     const [taskList, setTaskList] = useState<ITask[]>([])
+
 
     useEffect(() => {
         getTask()
     }, [])
 
     const getTask = async () => {
-        const getTask = await task.findAllActive()
-        if (getTask?.status === "ok") {
-            setTaskList(getTask.data)
+
+        if (isInit) {
+            setTaskList([...tasks])
         }
         else {
-            setTaskList([])
+            await dispatch(taskAction.fetchInitialTasks())
         }
     }
 
     const clearComplete = async () => {
-        const clearTask = await task.removeComplete()
-        if (clearTask && clearTask.status === "ok") {
-            location.reload()
-        }
-        else {
-            alert.any("error", "Error!", "ลบ Task ไม่สำเร็จ")
+        const res = await dispatch(taskAction.removeCompleteTasks())
+        if (taskAction.removeCompleteTasks.fulfilled.match(res)) {
+            console.log("res.payload : ", res.payload)
+            setTaskList(res.payload);
+            alert.any('success', 'Success!', 'Completed tasks cleared!');
+        } else if (taskAction.removeCompleteTasks.rejected.match(res)) {
+            alert.any('error', 'Error!', 'Failed to clear completed tasks.');
         }
     }
-
 
     const clearAll = async () => {
-        const clearTask = await task.removeAll()
-        if (clearTask && clearTask.status === "ok") {
-            location.reload()
-        }
-        else {
-            alert.any("error", "Error!", "ลบ Task ไม่สำเร็จ")
+        const res = await dispatch(taskAction.removeAllTasks())
+        if (taskAction.removeAllTasks.fulfilled.match(res)) {
+            setTaskList(res.payload);
+            alert.any('success', 'Success!', 'remove all tasks!');
+        } else if (taskAction.removeCompleteTasks.rejected.match(res)) {
+            alert.any('error', 'Error!', 'Failed to remove all tasks.');
         }
     }
 
+    useEffect(() => {
+        setTaskList(tasks);
+    }, [tasks]);
 
     return (
         <React.Fragment>
@@ -68,7 +78,7 @@ const PageManage = () => {
                     <small className='text-white'>{taskList.length} Task</small>
                 </div>
                 {taskList.map((t) => (
-                    <Task todo={t} />
+                    <Task key={t.id} todo={t} />
                 ))}
 
             </div>
