@@ -25,7 +25,7 @@ function Navbar() {
         },
         {
             name: "Dashboard",
-            route: "/dashboard"
+            route: "/"
         },
     ]
 
@@ -105,7 +105,7 @@ function Navbar() {
     return (
         <React.Fragment>
             <Box sx={{ flexGrow: 1 }}>
-                <div className=' fixed bg-violet-700 my-auto w-full z-10' >
+                <div className=' fixed bg-violet-700 my-auto w-full z-10 text-white' >
                     <Toolbar className='flex justify-between'>
                         <Typography
                             variant="h6"
