@@ -11,17 +11,15 @@ const Task = ({ todo }: { todo: ITask }) => {
     const dispatch = useDispatch<AppDispatch>();
 
     const completeTask = async () => {
-        console.log(todo.name)
         const res = await dispatch(taskAction.completeTask(todo.id))
         if (taskAction.completeTask.fulfilled.match(res)) {
-            alert.any('success', 'Success!', 'Pending tasks!');
+            alert.any('success', 'Success!', 'Complete tasks!');
         } else if (taskAction.completeTask.rejected.match(res)) {
-            alert.any('error', 'Error!', 'Failed to Pending tasks!');
+            alert.any('error', 'Error!', 'Failed to Complete tasks!');
         }
     }
 
     const pendingTask = async () => {
-        console.log(todo.name)
         const res = await dispatch(taskAction.pendingTask(todo.id))
         if (taskAction.pendingTask.fulfilled.match(res)) {
             alert.any('success', 'Success!', 'Pending tasks!');
