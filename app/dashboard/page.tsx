@@ -77,7 +77,7 @@ function DashboardPage() {
             </thead>
             <tbody className='mt-2'>
               {taskList.map((m, i: number) => (
-                <tr className='border-b border-zinc-900'>
+                <tr key={"tb_" + i} className='border-b border-zinc-900'>
                   <td className={`${i % 2 === 0 ? " bg-white " : " bg-emerald-100 "} ${i + 1 === taskList.length ? " rounded-bl-[12px] " : " "}  my-2`}>{m.id}</td>
                   <td className={`${i % 2 === 0 ? " bg-white " : " bg-emerald-100 "} p-2`}>{m.name}</td>
                   <td className={`${i % 2 === 0 ? " bg-white " : " bg-emerald-100 "} p-2`}>{m.status}</td>

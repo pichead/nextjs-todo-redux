@@ -1,0 +1,9 @@
+NEXT_PUBLIC_APP_NAME="TODO APP"
+NEXT_PUBLIC_PORT="3002"
+
+# enable it if you have backend
+# NEXT_PUBLIC_BACKEND_ENDPOINT="http://localhost:3333"
+
+
+NEXT_PUBLIC_ACCESS_TOKEN_NAME="accessTokenName"
+NEXT_PUBLIC_REFRESH_TOKEN_NAME="refreshTokenName"
