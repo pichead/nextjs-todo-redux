@@ -63,7 +63,7 @@ const PageManage = () => {
     return (
         <React.Fragment>
             <div className='mx-auto w-11/12 md:w-6/12 my-10'>
-                <div className='font-bold text-[23px]'>Task !</div>
+                <div className='font-bold text-[23px] text-white'>Task !</div>
                 <br />
                 <div className='flex justify-start md:justify-end'>
                     <div className='flex justify-end gap-2'>
