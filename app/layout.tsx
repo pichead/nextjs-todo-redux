@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from 'react'
+import React from 'react'
 
 // import type { Metadata } from "next";
 import localFont from "next/font/local";

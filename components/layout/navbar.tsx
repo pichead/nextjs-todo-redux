@@ -13,8 +13,8 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { ENV } from '@/utils/constants';
 import { useRouter } from 'next/navigation';
 import BtnDanger from '../button/btn-danger';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/store/store';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/store/store';
 import * as authAction from '@/store/slices/authSlice';
 import { cookiesHandler } from '@/utils/cookies';
 

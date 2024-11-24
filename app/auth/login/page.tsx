@@ -38,6 +38,7 @@ const LoginPage = () => {
                 }
             }
         } catch (error) {
+            console.error(error)
             alert.any("error", "system error", "เกิดข้อผิดพลาดจากระบบ")
         }
 
