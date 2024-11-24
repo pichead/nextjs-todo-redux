@@ -3,6 +3,7 @@ nextjs redux todo app templete
 
 
 # installation with nodejs
+
 npm i 
 
 npm run build
