@@ -12,8 +12,15 @@ import Menu from '@mui/material/Menu';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { ENV } from '@/utils/constants';
 import { useRouter } from 'next/navigation';
+import BtnDanger from '../button/btn-danger';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/store/store';
+import * as authAction from '@/store/slices/authSlice';
+import { cookiesHandler } from '@/utils/cookies';
 
 function Navbar() {
+
+    const dispatch = useDispatch<AppDispatch>();
 
     const router = useRouter()
 
@@ -70,6 +77,12 @@ function Navbar() {
         </Menu>
     );
 
+    const logout = async () => {
+        cookiesHandler.remove(ENV.accessTokenName)
+        await dispatch(authAction.logout())
+        location.reload()
+    }
+
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (
         <Menu
@@ -94,12 +107,19 @@ function Navbar() {
                     </div>
                 </MenuItem>
             ))}
+            <div className='flex justify-center'>
+                <BtnDanger onClick={logout} name={"Logout"} />
+            </div>
+
         </Menu>
     );
 
     const routing = (path: string) => {
         router.push(path)
     }
+
+
+
 
 
     return (
@@ -121,18 +141,8 @@ function Navbar() {
                                     {m.name}
                                 </div>
                             ))}
+                            <BtnDanger onClick={logout} name={"Logout"} />
 
-                            {/* <IconButton
-                                size="large"
-                                edge="end"
-                                aria-label="account of current user"
-                                aria-controls={menuId}
-                                aria-haspopup="true"
-                                onClick={handleProfileMenuOpen}
-                                color="inherit"
-                            >
-                                <AccountCircle />
-                            </IconButton> */}
                         </Box>
                         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                             <IconButton
@@ -146,6 +156,7 @@ function Navbar() {
                                 <MoreIcon />
                             </IconButton>
                         </Box>
+
                     </Toolbar>
                 </div>
                 {renderMobileMenu}

@@ -54,7 +54,7 @@ const login = async (email: string, password: string): Promise<IResponse | null>
 
 const validate = async (): Promise<IResponse | null> => {
     try {
-        const call = await apiAuth.get("/api/v1/auth/validate")
+        const call = await apiAuth.get("/api/v1/auth/validate-client")
         const res = await call.data
         return res
     } catch (error) {
@@ -67,32 +67,151 @@ const validate = async (): Promise<IResponse | null> => {
     }
 }
 
-const taskCreate = async () => {
+const taskCreate = async (name: string): Promise<IResponse | null> => {
+    try {
 
+        let payload = JSON.stringify({
+            "name": name
+        });
+
+        const call = await apiAuth.post('/api/v1/task/create', payload);
+        const res = await call.data
+        return res
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return error.response?.data
+        } else {
+            console.log(error)
+            return null
+        }
+    }
 }
 
-const taskEdit = async () => {
+const taskEdit = async (id: number, name: string): Promise<IResponse | null> => {
+    try {
 
+        let payload = JSON.stringify({
+            "name": name
+        });
+
+        const call = await apiAuth.patch('/api/v1/task/update/' + id, payload);
+        const res = await call.data
+        return res
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return error.response?.data
+        } else {
+            console.log(error)
+            return null
+        }
+    }
+}
+
+const taskPending = async (id: number): Promise<IResponse | null> => {
+    try {
+
+        const call = await apiAuth.patch('/api/v1/task/pending/' + id);
+        const res = await call.data
+        return res
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return error.response?.data
+        } else {
+            console.log(error)
+            return null
+        }
+    }
+}
+
+const taskCompete = async (id: number): Promise<IResponse | null> => {
+    try {
+
+        const call = await apiAuth.patch('/api/v1/task/complete/' + id);
+        const res = await call.data
+        return res
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return error.response?.data
+        } else {
+            console.log(error)
+            return null
+        }
+    }
 }
 
 
-const taskCompete = async () => {
+const taskRemoveComplete = async (): Promise<IResponse | null> => {
+    try {
+        const call = await apiAuth.delete('/api/v1/task/remove-complete');
+        const res = await call.data
+        return res
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return error.response?.data
+        } else {
+            console.log(error)
+            return null
+        }
+    }
+}
 
+const taskRemoveAll = async (): Promise<IResponse | null> => {
+    try {
+        const call = await apiAuth.delete('/api/v1/task/remove-all');
+        const res = await call.data
+        return res
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return error.response?.data
+        } else {
+            console.log(error)
+            return null
+        }
+    }
 }
 
 
-const taskRemoveComplete = async () => {
-
+const taskRemove = async (id: number): Promise<IResponse | null> => {
+    try {
+        const call = await apiAuth.delete('/api/v1/task/remove/' + id);
+        const res = await call.data
+        return res
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return error.response?.data
+        } else {
+            console.log(error)
+            return null
+        }
+    }
 }
-
-const taskRemove = async () => {
-
+const taskFindAll = async (): Promise<IResponse | null> => {
+    try {
+        const call = await apiAuth.get('/api/v1/task/findall');
+        const res = await call.data
+        return res
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return error.response?.data
+        } else {
+            console.log(error)
+            return null
+        }
+    }
 }
-const taskFindAll = async () => {
-
-}
-const taskFindAllActive = async () => {
-
+const taskFindAllActive = async (): Promise<IResponse | null> => {
+    try {
+        const call = await apiAuth.get('/api/v1/task/findall-active');
+        const res = await call.data
+        return res
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return error.response?.data
+        } else {
+            console.log(error)
+            return null
+        }
+    }
 }
 
 
@@ -105,7 +224,9 @@ export const apis = {
         create: taskCreate,
         edit: taskEdit,
         complete: taskCompete,
+        pending: taskPending,
         removeComplete: taskRemoveComplete,
+        removeAll: taskRemoveAll,
         remove: taskRemove,
         findAll: taskFindAll,
         findAllActive: taskFindAllActive
