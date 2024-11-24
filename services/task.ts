@@ -2,6 +2,7 @@ import { ENV } from "@/utils/constants"
 import { local } from "@/utils/localstorage"
 import { res } from "./response"
 import { sortData } from "@/utils/array-object"
+import { apis } from "./api"
 
 const errorName = (name?: string) => {
     return `Error at task manage ${name} : `
@@ -57,8 +58,16 @@ const initialData: ITask[] = [
 
 const initial = async () => {
     try {
-        console.log("init task")
         if (serviceType === "api") {
+
+            const result = await apis.task.findAllActive()
+            console.log("result : ",result)
+            if (result && result.statusCode == 200) {
+                return res.ok("ค้นหา task สำเร็จ", sortData(result.data, "createdAt", "asc"))
+            }
+            else {
+                return res.error("ค้นหาไม่สำเร็จ")
+            }
 
         }
         else {
@@ -86,6 +95,14 @@ const create = async (name: string) => {
 
         if (serviceType === "api") {
 
+            const result = await apis.task.create(name)
+
+            if (result && result.statusCode == 200) {
+                return res.ok("สร้าง task ใหม่สำเร็จ", sortData(result.data, "createdAt", "asc"))
+            }
+            else {
+                return res.error("สร้าง task ไม่สำเร็จ")
+            }
         }
         else {
             const taskData = local.get("task");
@@ -113,7 +130,14 @@ const findAll = async () => {
     try {
 
         if (serviceType === "api") {
+            const result = await apis.task.findAll()
 
+            if (result && result.statusCode == 200) {
+                return res.ok("ค้นหา task สำเร็จ", sortData(result.data, "createdAt", "asc"))
+            }
+            else {
+                return res.error("ค้นหา task ไม่สำเร็จ")
+            }
         }
         else {
             const taskData = local.get("task");
@@ -137,7 +161,14 @@ const findAllActive = async () => {
     try {
 
         if (serviceType === "api") {
+            const result = await apis.task.findAllActive()
 
+            if (result && result.statusCode == 200) {
+                return res.ok("ค้นหา task สำเร็จ", sortData(result.data, "createdAt", "asc"))
+            }
+            else {
+                return res.error("ค้นหา task ไม่สำเร็จ")
+            }
         }
         else {
             const taskData = local.get("task");
@@ -161,7 +192,14 @@ const complete = async (id: number) => {
     try {
 
         if (serviceType === "api") {
+            const result = await apis.task.complete(id)
 
+            if (result && result.statusCode == 200) {
+                return res.ok("ปิด task สำเร็จ", sortData(result.data, "createdAt", "asc"))
+            }
+            else {
+                return res.error("ปิด task ไม่สำเร็จ")
+            }
         }
         else {
             const taskData = local.get("task");
@@ -197,7 +235,14 @@ const pending = async (id: number) => {
     try {
 
         if (serviceType === "api") {
+            const result = await apis.task.pending(id)
 
+            if (result && result.statusCode == 200) {
+                return res.ok("เปลี่ยนสถานะ task สำเร็จ", sortData(result.data, "createdAt", "asc"))
+            }
+            else {
+                return res.error("เปลี่ยนสถานะ task ไม่สำเร็จ")
+            }
         }
         else {
             const taskData = local.get("task");
@@ -235,7 +280,14 @@ const removeComplete = async () => {
     try {
 
         if (serviceType === "api") {
+            const result = await apis.task.removeComplete()
 
+            if (result && result.statusCode == 200) {
+                return res.ok("ลบ task สำเร็จ", sortData(result.data, "createdAt", "asc"))
+            }
+            else {
+                return res.error("ลบ task ไม่สำเร็จ")
+            }
         }
         else {
             const taskData = local.get("task");
@@ -268,7 +320,14 @@ const removeAll = async () => {
     try {
 
         if (serviceType === "api") {
+            const result = await apis.task.removeAll()
 
+            if (result && result.statusCode == 200) {
+                return res.ok("ลบ task สำเร็จ", sortData(result.data, "createdAt", "asc"))
+            }
+            else {
+                return res.error("ลบ task ไม่สำเร็จ")
+            }
         }
         else {
             const taskData = local.get("task");
@@ -296,7 +355,14 @@ const remove = async (id: number) => {
     try {
 
         if (serviceType === "api") {
+            const result = await apis.task.remove(id)
 
+            if (result && result.statusCode == 200) {
+                return res.ok("ลบ task สำเร็จ", sortData(result.data, "createdAt", "asc"))
+            }
+            else {
+                return res.error("ลบ task ไม่สำเร็จ")
+            }
         }
         else {
             const taskData = local.get("task");
