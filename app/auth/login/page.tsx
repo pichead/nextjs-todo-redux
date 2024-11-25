@@ -3,7 +3,7 @@ import { apis } from '@/services/api'
 import { alert } from '@/utils/alert'
 import { ENV } from '@/utils/constants'
 import { cookiesHandler } from '@/utils/cookies'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const LoginPage = () => {
 
@@ -14,6 +14,32 @@ const LoginPage = () => {
         email: "",
         password: ""
     })
+
+    // const getData = async () => {
+    //     const myHeaders = new Headers();
+    //     myHeaders.append("Content-Type", "application/json");
+
+    //     const raw = JSON.stringify({
+    //         "email": "eeexx17@hotmail.com",
+    //         "password": "weare12we"
+    //     });
+
+    //     const requestOptions: any = {
+    //         method: "POST",
+    //         headers: myHeaders,
+    //         body: raw,
+    //         redirect: "follow"
+    //     };
+
+    //     fetch("/api/proxy", requestOptions)
+    //         .then((response) => response.text())
+    //         .then((result) => console.log(result))
+    //         .catch((error) => console.error(error));
+    // }
+
+    // useEffect(() => {
+    //     getData()
+    // }, [])
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()

@@ -7,15 +7,17 @@ const accessTokenName = ENV.accessTokenName
 const refreshTokenName = ENV.refreshTokenName
 
 
+const proxyBaseURL = '/api/proxy';
+
 const apiAuth = axios.create({
-    baseURL: backend,
+    baseURL: proxyBaseURL,
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
 apiAuth.interceptors.request.use(request => {
-    const accessToken = cookiesHandler.get(accessTokenName)
+    const accessToken = cookiesHandler.get(accessTokenName);
     if (accessToken) {
         request.headers['Authorization'] = `Bearer ${accessToken}`;
     }
@@ -25,11 +27,12 @@ apiAuth.interceptors.request.use(request => {
 });
 
 const apiPublic = axios.create({
-    baseURL: backend,
+    baseURL: proxyBaseURL,
     headers: {
         'Content-Type': 'application/json',
     },
 });
+
 
 const login = async (email: string, password: string): Promise<IResponse | null> => {
     try {
